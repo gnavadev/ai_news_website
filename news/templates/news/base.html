@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}Brainrot Daily - Breaking News & Analysis{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Stay informed with the latest breaking news, analysis, and expert commentary from trusted journalists worldwide.">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #1e3a8a;
+      --secondary-blue: #3b82f6;
+      --accent-red: #dc2626;
+      --text-gray: #374151;
+      --light-gray: #f8fafc;
+      --border-gray: #e5e7eb;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-gray);
+      line-height: 1.6;
+    }
+    
+    .navbar-custom {
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+      border-bottom: 3px solid var(--accent-red);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .navbar-brand {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    
+    .top-bar {
+      background-color: var(--light-gray);
+      border-bottom: 1px solid var(--border-gray);
+      font-size: 0.85rem;
+      padding: 8px 0;
+    }
+    
+    .breaking-badge {
+      background-color: var(--accent-red);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    
+    .nav-links a {
+      color: var(--text-gray);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    .nav-links a:hover {
+      color: var(--secondary-blue);
+    }
+    
+    .social-links a {
+      color: var(--text-gray);
+      margin-left: 15px;
+      transition: color 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: var(--secondary-blue);
+    }
+    
+    .main-content {
+      margin-top: 2rem;
+    }
+    
+    .footer-custom {
+      background-color: var(--primary-blue);
+      color: white;
+      margin-top: 4rem;
+    }
+    
+    .footer-custom a {
+      color: #cbd5e1;
+      text-decoration: none;
+    }
+    
+    .footer-custom a:hover {
+      color: white;
+    }
+    
+    .breadcrumb-custom {
+      background-color: transparent;
+      padding: 0;
+      margin-bottom: 1rem;
+    }
+    
+    .breadcrumb-custom .breadcrumb-item a {
+      color: var(--secondary-blue);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <span class="breaking-badge">LIVE</span>
+            <span class="text-muted">
+              <i class="fas fa-clock me-1"></i>
+              <span id="current-time"></span>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-end">
+            <div class="nav-links">
+              <a href="#">Subscribe</a>
+              <a href="#">Newsletter</a>
+              <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'news_feed' %}">
+        <i class="fas fa-newspaper me-2"></i>
+        Brainrot Daily
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'news_feed' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Politics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Business</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">World</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Technology</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Sports</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container main-content">
+    {% block breadcrumb %}{% endblock %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-custom">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-md-4">
+          <h5 class="mb-3">Brainrot Daily</h5>
+          <p class="text-light">Delivering trusted news and analysis to keep you informed about what matters most.</p>
+          <div class="social-links">
+            <a href="#" class="me-3"><i class="fab fa-twitter fa-lg"></i></a>
+            <a href="#" class="me-3"><i class="fab fa-facebook fa-lg"></i></a>
+            <a href="#" class="me-3"><i class="fab fa-instagram fa-lg"></i></a>
+            <a href="#" class="me-3"><i class="fab fa-youtube fa-lg"></i></a>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <h6 class="mb-3">News</h6>
+          <ul class="list-unstyled">
+            <li><a href="#">Politics</a></li>
+            <li><a href="#">Business</a></li>
+            <li><a href="#">World</a></li>
+            <li><a href="#">Technology</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <h6 class="mb-3">Company</h6>
+          <ul class="list-unstyled">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <h6 class="mb-3">Support</h6>
+          <ul class="list-unstyled">
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Corrections</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <h6 class="mb-3">Subscribe</h6>
+          <ul class="list-unstyled">
+            <li><a href="#">Newsletter</a></li>
+            <li><a href="#">RSS Feed</a></li>
+            <li><a href="#">Mobile App</a></li>
+            <li><a href="#">Notifications</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="my-4" style="border-color: #475569;">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <p class="mb-0">&copy; 2025 Brainrot Daily. All rights reserved.</p>
+        </div>
+        <div class="col-md-6">
+          <p class="mb-0 text-end">
+            <small class="text-light">
+              <i class="fas fa-shield-alt me-1"></i>
+              Trusted by millions worldwide
+            </small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Update current time
+    function updateTime() {
+      const now = new Date();
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZoneName: 'short'
+      };
+      document.getElementById('current-time').textContent = now.toLocaleDateString('en-US', options);
+    }
+    
+    updateTime();
+    setInterval(updateTime, 60000); // Update every minute
+  </script>
+</body>
+</html>

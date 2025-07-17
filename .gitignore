@@ -1,0 +1,68 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+venv/
+env/
+ENV/
+.venv/
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.mo
+db.sqlite3
+media/
+
+# Static files (collected)
+staticfiles/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+htmlcov/
+.coverage
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Django migrations
+*/migrations/*.pyc
+*/migrations/*.py[cod]
+*/migrations/__pycache__/
+
+# PyCharm
+.idea/
+
+# Logs
+*.log
+
+# Database files
+*.sqlite3
+
+# Celery beat schedule file
+celerybeat-schedule
+
+# dotenv environment variables file
+.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
