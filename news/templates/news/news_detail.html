@@ -334,7 +334,7 @@
           
           <div class="d-flex align-items-center gap-1">
             <i class="fas fa-clock"></i>
-            <span>Published 2 hours ago</span>
+            <span>Published {{ post.created_at|timesince }} ago</span>
           </div>
           
           <div class="d-flex align-items-center gap-1">
@@ -351,7 +351,7 @@
       
       <!-- Article Image -->
       <figure>
-        <img class="article-image" src="{{ post.image_url }}" alt="{{ post.headline }}">
+        <img class="article-image" src="{{ post.image_url.url }}" alt="{{ post.headline }}">
         <figcaption class="image-caption">
           Breaking news image capturing the latest developments in this ongoing story.
         </figcaption>

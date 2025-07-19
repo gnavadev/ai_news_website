@@ -2,6 +2,11 @@ from django.core.management.base import BaseCommand
 from news.models import NewsPost
 from openai import OpenAI
 import os
+from django.core.files.storage import default_storage
+import requests
+from django.utils.text import slugify
+from datetime import datetime
+from django.core.files.base import ContentFile
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
@@ -29,16 +34,23 @@ class Command(BaseCommand):
 
         image_res = client.images.generate(
             model="dall-e-3",
-            prompt=f"Create a realistic illustration of this headline: {headline}, again, IT NEEDS TO LOOK REA, to the point of someone looking at it and think it is just a photo",
+            prompt=f"A high-resolution, ultra-realistic photograph of: {headline}. It should look like a real news photo taken by a professional journalist with a DSLR camera. Natural lighting, no illustration or painting style, just pure realism. People should think it's an actual photo from a news agency like Reuters or AP.",
             n=1,
             size="1024x1024"
         )
-        image_url = image_res.data[0].url
+        temp_url = image_res.data[0].url
+        response = requests.get(temp_url)
+        if response.status_code == 200:
+            image_name = f"{slugify(headline)}.png"
+            image_file = ContentFile(response.content)
+            image_file.name = image_name
+        else:
+            image_file = None  
 
         post = NewsPost.objects.create(
             headline=headline,
             content=content,
-            image_url=image_url
+            image_url=image_file  
         )
 
         self.stdout.write(self.style.SUCCESS(f"✅ News post created: {post.headline}"))

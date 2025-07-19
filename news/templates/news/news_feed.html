@@ -1,4 +1,4 @@
-{% extends "news/base.html" %} {% block title %}Breaking News & Latest Headlines
+{% extends "news/base.html" %} {% load static %} {% block title %}Breaking News & Latest Headlines
 - Brainrot Daily{% endblock %} {% block content %}
 <style>
   .hero-section {
@@ -289,11 +289,21 @@
     {% for post in posts %}
     <article class="news-card card">
       <div class="position-relative">
-        <img
-          class="card-img-top"
-          src="{{ post.image_url }}"
-          alt="Breaking news image for {{ post.headline }}"
-        />
+        {% if post.image_url %}
+          <!-- This is the corrected image rendering -->
+          <img
+            class="card-img-top"
+            src="{{ post.image_url.url }}"
+            alt="Breaking news image for {{ post.headline }}"
+          />
+        {% else %}
+          <!-- Fallback image if no image is available -->
+          <img
+            class="card-img-top"
+            src="{% static 'images/default-news.jpg' %}"
+            alt="Default news image"
+          />
+        {% endif %}
         <div class="position-absolute top-0 start-0 p-3">
           <span class="category-badge">Breaking</span>
         </div>
@@ -311,11 +321,11 @@
         <div class="meta-info">
           <span>
             <i class="fas fa-clock me-1"></i>
-            2 hours ago
+            {{ post.created_at|timesince }} ago
           </span>
           <span>
             <i class="fas fa-user me-1"></i>
-            Staff Reporter
+            AI Reporter
           </span>
           <span>
             <i class="fas fa-eye me-1"></i>
